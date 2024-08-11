@@ -1,7 +1,6 @@
-import React from 'react'
-import './style.css'
+import './style.css';
 
-import List from './List'
+import List from './List';
 
 export default function App() {
   return (

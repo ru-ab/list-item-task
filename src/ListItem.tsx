@@ -1,20 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import { memo, useRef } from 'react';
 
-export default function ListItem({ index, item, onUpdate }) {
-  const [renderCount, setRenderCount] = useState(0)
+type Item = {
+  id: number;
+  label: string;
+  value: number;
+};
 
-  useEffect(() => {
-    setRenderCount(renderCount + 1)
-  }, [item])
+type ListItemProps = {
+  index: number;
+  item: Item;
+  onUpdate: (index: number) => void;
+};
+
+const ListItem = memo<ListItemProps>(function ListItem({
+  index,
+  item,
+  onUpdate,
+}) {
+  const renderCount = useRef<number>(0);
+  renderCount.current = renderCount.current + 1;
 
   const handleClick = () => {
-    onUpdate(index)
-  }
+    onUpdate(index);
+  };
 
   return (
     <li>
-      {item.label}: {item.value} (renders: {renderCount})
+      {item.label}: {item.value} (renders: {renderCount.current})
       <button onClick={handleClick}>Update</button>
     </li>
-  )
-}
+  );
+});
+
+export default ListItem;
